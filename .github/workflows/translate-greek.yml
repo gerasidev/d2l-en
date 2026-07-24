@@ -6,6 +6,11 @@ on:
       - agent/greek-translation
     paths:
       - .github/workflows/translate-greek.yml
+  pull_request:
+    branches:
+      - master
+    paths:
+      - .github/workflows/translate-greek.yml
   workflow_dispatch:
 
 permissions:
