@@ -1,0 +1,305 @@
+# Technical terms that must remain in English.
+# Matching is case-insensitive; the original capitalization is preserved.
+convolutional neural networks
+convolutional neural network
+deep neural networks
+deep neural network
+recurrent neural networks
+recurrent neural network
+graph neural networks
+graph neural network
+generative adversarial networks
+generative adversarial network
+artificial neural networks
+artificial neural network
+neural networks
+neural network
+multilayer perceptrons
+multilayer perceptron
+linear regression
+softmax regression
+logistic regression
+polynomial regression
+nonlinear regression
+linear models
+linear model
+nonlinear models
+nonlinear model
+deep learning
+machine learning
+computer vision
+natural language processing
+reinforcement learning
+supervised learning
+unsupervised learning
+semi-supervised learning
+self-supervised learning
+transfer learning
+representation learning
+few-shot learning
+zero-shot learning
+online learning
+active learning
+federated learning
+convolutional layer
+convolutional layers
+fully connected layer
+fully connected layers
+fully connected
+hidden layer
+hidden layers
+input layer
+input layers
+output layer
+output layers
+pooling layer
+pooling layers
+recurrent layer
+recurrent layers
+attention mechanism
+attention mechanisms
+self-attention
+multi-head attention
+cross-attention
+positional encoding
+encoder-decoder
+encoder
+encoders
+decoder
+decoders
+Transformer
+Transformers
+Vision Transformer
+Vision Transformers
+convolution
+convolutions
+transposed convolution
+depthwise convolution
+pointwise convolution
+kernel
+kernels
+stride
+strides
+padding
+dilation
+pooling
+max pooling
+average pooling
+global average pooling
+activation function
+activation functions
+loss function
+loss functions
+objective function
+objective functions
+cost function
+cost functions
+gradient descent
+stochastic gradient descent
+mini-batch stochastic gradient descent
+backpropagation
+forward pass
+backward pass
+learning rate
+learning rates
+learning rate scheduler
+learning rate schedulers
+optimizer
+optimizers
+optimization
+Adam
+AdamW
+SGD
+RMSProp
+AdaGrad
+momentum
+weight decay
+regularization
+dropout
+batch normalization
+layer normalization
+group normalization
+instance normalization
+early stopping
+gradient clipping
+vanishing gradients
+exploding gradients
+training
+pretraining
+fine-tuning
+inference
+prediction
+predictions
+classifier
+classifiers
+classification
+regression
+clustering
+segmentation
+object detection
+image classification
+semantic segmentation
+instance segmentation
+panoptic segmentation
+model
+models
+parameter
+parameters
+hyperparameter
+hyperparameters
+weight
+weights
+bias
+biases
+gradient
+gradients
+feature
+features
+feature map
+feature maps
+label
+labels
+input
+inputs
+output
+outputs
+data
+dataset
+datasets
+data loader
+data loaders
+data augmentation
+training data
+validation data
+test data
+training set
+validation set
+test set
+batch
+batches
+minibatch
+minibatches
+mini-batch
+mini-batches
+epoch
+epochs
+sample
+samples
+example
+examples
+pixel
+pixels
+spatial
+spatial structure
+spatial relation
+spatial relations
+tensor
+tensors
+embedding
+embeddings
+token
+tokens
+tokenizer
+tokenizers
+vocabulary
+sequence
+sequences
+time series
+hidden state
+hidden states
+attention score
+attention scores
+attention weight
+attention weights
+query
+queries
+key
+keys
+value
+values
+query-key-value
+Q-learning
+policy gradient
+actor-critic
+reward
+rewards
+agent
+agents
+environment
+environments
+state
+states
+action
+actions
+replay buffer
+Markov decision process
+Gaussian process
+Gaussian processes
+Bayesian optimization
+hyperparameter optimization
+recommendation system
+recommendation systems
+recommender system
+recommender systems
+collaborative filtering
+matrix factorization
+autoencoder
+autoencoders
+variational autoencoder
+variational autoencoders
+diffusion model
+diffusion models
+language model
+language models
+large language model
+large language models
+pretrained model
+pretrained models
+foundation model
+foundation models
+API
+APIs
+high-level APIs
+framework
+frameworks
+architecture
+architectures
+CNN-based architectures
+design matrix
+design matrices
+MLP
+MLPs
+CNN
+CNNs
+ConvNet
+ConvNets
+RNN
+RNNs
+LSTM
+LSTMs
+GRU
+GRUs
+GAN
+GANs
+VAE
+VAEs
+BERT
+GPT
+ResNet
+AlexNet
+VGG
+GoogLeNet
+Inception
+DenseNet
+MobileNet
+ImageNet
+PyTorch
+TensorFlow
+JAX
+MXNet
+NumPy
+Pandas
+Matplotlib
+scikit-learn
+linear
+nonlinear

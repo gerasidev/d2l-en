@@ -1,0 +1,137 @@
+name: Translate D2L to Greek
+
+on:
+  push:
+    branches:
+      - agent/greek-translation
+    paths:
+      - .github/workflows/translate-greek.yml
+  pull_request:
+    branches:
+      - master
+    paths:
+      - .github/workflows/translate-greek.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: d2l-greek-translation
+  cancel-in-progress: false
+
+jobs:
+  translate:
+    name: Translate shard ${{ matrix.shard }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3, 4, 5, 6, 7]
+
+    steps:
+      - name: Check out English source
+        uses: actions/checkout@v4
+        with:
+          ref: master
+          path: source
+
+      - name: Check out translation tools
+        uses: actions/checkout@v4
+        with:
+          ref: agent/greek-translation
+          path: translation
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install translation dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install \
+            "transformers>=4.53,<5" \
+            "sentencepiece>=0.2,<1" \
+            "sacremoses>=0.1,<1"
+
+      - name: Prepare translation script
+        run: |
+          if [ -f translation/tools/greek_translation/translate_book.py ]; then
+            cp translation/tools/greek_translation/translate_book.py /tmp/translate_book.py
+          else
+            cat translation/tools/greek_translation/bootstrap/translate_book.py.b64.* | base64 --decode > /tmp/translate_book.py
+          fi
+
+      - name: Translate book files
+        run: |
+          python /tmp/translate_book.py \
+            --root source \
+            --output-dir output \
+            --terms translation/tools/greek_translation/terms.txt \
+            --shard-index "${{ matrix.shard }}" \
+            --shard-count 8
+
+      - name: Upload translated shard
+        uses: actions/upload-artifact@v4
+        with:
+          name: greek-translation-${{ matrix.shard }}
+          path: output
+          if-no-files-found: error
+          retention-days: 2
+
+  assemble:
+    name: Validate and commit Greek edition
+    needs: translate
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Check out translation branch
+        uses: actions/checkout@v4
+        with:
+          ref: agent/greek-translation
+          fetch-depth: 0
+
+      - name: Check out English source for validation
+        uses: actions/checkout@v4
+        with:
+          ref: master
+          path: english-source
+
+      - name: Download all translated shards
+        uses: actions/download-artifact@v4
+        with:
+          pattern: greek-translation-*
+          path: .
+          merge-multiple: true
+
+      - name: Prepare validation scripts
+        run: |
+          if [ ! -f tools/greek_translation/translate_book.py ]; then
+            cat tools/greek_translation/bootstrap/translate_book.py.b64.* | base64 --decode > tools/greek_translation/translate_book.py
+          fi
+          if [ ! -f tools/greek_translation/validate_translation.py ]; then
+            cat tools/greek_translation/bootstrap/validate_translation.py.b64.* | base64 --decode > tools/greek_translation/validate_translation.py
+          fi
+
+      - name: Validate protected structure
+        run: |
+          python tools/greek_translation/validate_translation.py \
+            --source-root english-source \
+            --translated-root .
+
+      - name: Commit complete Greek first pass
+        run: |
+          rm -rf english-source tools/greek_translation/bootstrap
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.md chapter_* tools/greek_translation
+          if git diff --cached --quiet; then
+            echo "No translation changes to commit."
+            exit 0
+          fi
+          git commit -m "Translate complete book prose to Greek"
+          git push origin HEAD:agent/greek-translation
